@@ -18,6 +18,7 @@ def minimos_cuadrados(X, Y):
     return m, c
 
 # 1. Datos de telemetria simulados (Carga de usuarios vs Latencia en ms)
+# Se incluye ruido aleatorio emulando el comportamiento de una red real
 np.random.seed(42)
 usuarios = np.array([10, 20, 30, 40, 50, 60, 70, 80, 90, 100], dtype=float)
 ruido = np.random.normal(0, 8, len(usuarios))
@@ -75,3 +76,12 @@ plt.savefig('grafica_minimos_cuadrados.png', dpi=300)
 
 # Desplegar la ventana interactiva del grafico
 plt.show()
+
+# 7. Exportar los datos simulados a un archivo CSV obligatorio
+import csv
+with open('telemetria_servidor.csv', mode='w', newline='') as file:
+    writer = csv.writer(file)
+    writer.writerow(['Usuarios_Concurrentes', 'Latencia_ms'])
+    for u, l in zip(usuarios, latencia):
+        writer.writerow([u, l])
+print("Archivo 'telemetria_servidor.csv' generado con exito.")
